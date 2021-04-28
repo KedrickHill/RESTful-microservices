@@ -1,4 +1,6 @@
-package com.microservices.simplestoreproducts;
+package com.microservices.simplestoreproducts.repositories;
+
+import com.microservices.simplestoreproducts.entities.Product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package com.microservices.simplestoreproducts;
+package com.microservices.simplestoreproducts.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
