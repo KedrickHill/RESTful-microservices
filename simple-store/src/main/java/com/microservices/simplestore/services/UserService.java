@@ -1,11 +1,10 @@
 package com.microservices.simplestore.services;
 
 import java.util.List;
-import java.util.Optional;
 
+import com.microservices.simplestore.dms.DataManager;
 import com.microservices.simplestore.entities.User;
-import com.microservices.simplestore.exceptions.UserNotFoundException;
-import com.microservices.simplestore.repositories.UserRepository;
+import com.microservices.simplestore.models.CreateUser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,42 +12,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
-    // private DataManager dataManager;
-
     @Autowired
-    private UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private DataManager dataManager;
 
-    public User saveUser(User user) {
-        userRepository.save(user);
-        return user;
+    public User saveUser(CreateUser user) {
+        return dataManager.saveUser(user);
     }
 
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return dataManager.getAllUsers();
     }
 
     public User getUserById(int id) {
-        Optional<User> optUser = userRepository.findById(id);
-        if (!optUser.isPresent())
-            throw new UserNotFoundException("User does not exist");
-        return optUser.get();
+        return dataManager.getUserById(id);
 
     }
 
     public User getUserByName(String name) {
-        Optional<User> optUser = userRepository.findByName(name);
-        if (!optUser.isPresent())
-            throw new UserNotFoundException("User does not exist"); // this is repeated across a few methods. Consider for dataManager?
-        return optUser.get();
+        return dataManager.getUserByName(name);
     }
 
     public void deleteUserById(int id) {
-        Optional<User> optUser = userRepository.findById(id);
-        if (!optUser.isPresent())
-            throw new UserNotFoundException("User does not exist");
-        userRepository.delete(optUser.get());
+        dataManager.deleteUserById(id);
     }
 }

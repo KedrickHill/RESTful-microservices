@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.microservices.simplestore.entities.User;
+import com.microservices.simplestore.models.CreateUser;
 import com.microservices.simplestore.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,8 @@ public class LoginController {
         return String.format("Welcome to the Store, %s!", name);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
+    @PostMapping("/users")
+    public ResponseEntity<Object> createUser(@Valid @RequestBody CreateUser user) { 
         User savedUser = userService.saveUser(user);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id]").buildAndExpand(savedUser.getId()).toUri();
